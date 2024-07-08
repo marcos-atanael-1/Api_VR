@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Cenário</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .img-thumbnail {
+            max-width: 200px; /* Limita o tamanho máximo da imagem */
+            height: auto;
+            border-radius: 5px; /* Bordas arredondadas para a imagem */
+        }
+        .action-buttons {
+            display: flex; /* Alinha os botões lado a lado */
+            gap: 10px; /* Espaço entre os botões */
+        }
+        .details-column {
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Detalhes do Cenário: {{ cenario.name }}</h2>
+        <div class="row">
+            <div class="col-md-8 details-column">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Nome:</strong> {{ cenario.name }}</h5>
+                        
+                        <p class="card-text"><strong>Descrição:</strong> {{ cenario.description }}</p>
+
+                        <p class="card-text"><strong>Tags:</strong> {{ cenario.tags }}</p>
+                        <p class="card-text"><strong>Visibilidade:</strong> {{ 'Público' if cenario.is_public else 'Privado' }}</p>
+                        <br></br>
+                        <h5 style="text-align: center;"><strong>Arquivos Bundles</strong></h5>
+                        <ul>
+                            {% for bundle in bundles %}
+                            <li>
+                                {{ bundle.platform }} Bundle:
+                                {% if bundle.bundle_path %}
+                                
+                                <a href="{{ url_for('download_bundle', filename=bundle.bundle_path.split('\\')|last) }}" class="btn btn-success">Download</a>
+                                <br></br>
+                                {% else %}
+                                Não disponível
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="action-buttons">
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Voltar ao Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Imagem do cenário -->
+                {% if cenario.get('image_path') %}
+                <img src="{{ url_for('send_image', filename=cenario.get('image_path')) }}" alt="Imagem do Cenário" class="scenario-img">
+            {% else %}
+                Sem imagem
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.40.9/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

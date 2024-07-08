@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Cenário</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Cadastrar Cenário</h1>
+        <form id="scenarioForm" action="/enviar-cenario" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="scenarioName">Nome do Cenário:</label>
+                <input type="text" class="form-control" id="scenarioName" name="scenarioName" placeholder="Digite o nome do cenário" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição:</label>
+                <textarea class="form-control" id="description" name="description" placeholder="Digite a descrição do cenário" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags:</label>
+                <input type="text" class="form-control" id="tags" name="tags" placeholder="Digite as tags separadas por vírgula" required>
+            </div>
+            <div class="form-group">
+                <label for="images">Imagens Representativas:</label>
+                <input type="file" class="form-control-file" id="images" name="images" accept="image/*" multiple required>
+            </div>
+            <div class="form-group">
+                <label>Assets Bundles por Plataforma:</label>
+                <div class="form-group">
+                    <label for="androidBundle">Android:</label>
+                    <input type="file" class="form-control-file" id="androidBundle" name="androidBundle" accept=".unity3d,.assetbundle,.bundle">
+                </div>
+                <div class="form-group">
+                    <label for="windowsBundle">Windows:</label>
+                    <input type="file" class="form-control-file" id="windowsBundle" name="windowsBundle" accept=".unity3d,.assetbundle,.bundle">
+                </div>
+                <div class="form-group">
+                    <label for="macBundle">Mac:</label>
+                    <input type="file" class="form-control-file" id="macBundle" name="macBundle" accept=".unity3d,.assetbundle,.bundle">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Visibilidade:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="publicOption" name="visibilityOption" value="public" checked required>
+                    <label class="form-check-label" for="publicOption">Público</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="privateOption" name="visibilityOption" value="private" required>
+                    <label class="form-check-label" for="privateOption">Privado</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="button" onclick="window.history.back();" class="btn btn-secondary">Voltar</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.40.9/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validateForm() {
+            var android = document.getElementById('androidBundle').value;
+            var windows = document.getElementById('windowsBundle').value;
+            var mac = document.getElementById('macBundle').value;
+            if (android === '' && windows === '' && mac === '') {
+                alert('Por favor, carregue pelo menos um Asset Bundle.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
