@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, render_template, request, redirect, url_for, flash, make_response, session, send_from_directory
-from flask_paginate import Pagination, get_page_args
 import mysql.connector
 from mysql.connector import pooling
 from datetime import datetime, timedelta
@@ -117,9 +116,15 @@ def dashboard():
 
     return render_template('dashboard.html', cenarios=cenarios)
 
+
 @app.route('/uploads/images/<path:filename>')
 def send_image(filename):
     return send_from_directory(images_directory, filename)
+
+
+
+
+
 
 @app.route('/download_bundle/<filename>')
 @login_required
@@ -324,7 +329,6 @@ def apply_caching(response):
     response.headers["Cache-Control"] = "no-store"
     return response
 ##################################################Site##########################################################
-
 
 @app.route('/gerar_token', methods=['POST'])
 def gerar_token():
@@ -874,6 +878,13 @@ def serialize_data():
     except Exception as e:
         db.rollback()
         return jsonify({'error': str(e)}), 500
+
+
+
+
+@app.route('/conexao', methods=['GET'])
+def check_connection():
+    return jsonify({'status': 'Ok'})
 
 
 ################################################UPLOADSFILES###############################################
